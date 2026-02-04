@@ -1,0 +1,21 @@
+name: CI-Build
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run a one-line script
+        run: echo "The VotingApp code has been checked out and is ready to build!"
+
+      - name: Run a multi-line script
+        run: |
+          echo "Starting build process..."
+          # Add your build commands here (e.g., npm install, dotnet build)
