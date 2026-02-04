@@ -1,6 +1,5 @@
 ## This file is from github
-## testing my pipeline at both places
-## testing my pipeline at both places
+## My final tests to check pipelines are rewired in github azure devops
 trigger:
   branches:
     include:
