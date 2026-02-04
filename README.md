@@ -63,4 +63,6 @@ export ADO_PAT="<your_ado_token_here>"
 - To ensure zero downtime for the build process, we "rewired" our existing Azure Pipelines to listen to the new GitHub repository
 - Integration: Installed the [Azure Pipelines GitHub App](https://github.com/marketplace/azure-pipelines).
 - Result: Every commit pushed to GitHub now triggers action on azo pipeline.
-- 
+
+- Sample screen of successful mannequin reclaim
+  ![Alt Text](images/pipeline-rewiring.png)
