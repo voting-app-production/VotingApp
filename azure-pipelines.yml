@@ -1,69 +1,35 @@
-## This file is from github
-## My final tests to check pipelines are rewired in github azure devops
+# 1. Name of the build (optional in ADO)
+name: CI-Build-$(Date:yyyyMMdd)$(Rev:.r)
+
+# 2. Trigger for pushes to the main branch
 trigger:
-  branches:
-    include:
-      - main
+- main
 
-variables:
-  dockerRegistryServiceConnection: 'ACR'
-  imageRepository: 'azure-vote-front'
-  containerRegistry: '< *** Replace with ACR DNS registry name *** >'
-  dockerfilePath: '**/Dockerfile'
-  tag: '$(Build.BuildId)'
-  imagePullSecret: 'csacr5d93-auth'  
+# 3. Trigger for Pull Requests (Note: For Azure Repos, PR triggers 
+# are often handled via 'Branch Policies' in the UI, but this is the YAML syntax)
+pr:
+- main
 
-stages:
+# 4. Point to your MacBook Runner
+pool:
+  name: 'Default' 
 
-- stage: Build
-  displayName: Build stage
-  jobs:  
-  - job: Build
-    displayName: Build
-    pool:
-      name: Default
-    steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
-          
-    - upload: manifests
-      artifact: manifests
+jobs:
+- job: Build
+  displayName: 'Build Job'
+  steps:
+    # 5. Checkout code (In ADO, 'checkout: self' is implicit, but we list it for clarity)
+    - checkout: self
+      displayName: 'Checkout code'
 
-- stage: Development
-  displayName: Deploy to dev
-  dependsOn: Build
+    # 6. Run a one-line script
+    - script: echo "The VotingApp code has been checked out and is ready to build!"
+      displayName: 'Run a one-line script'
 
-  jobs:
-  - deployment: Deploy
-    displayName: Deploy to dev
-    pool:
-      name: Default
-    environment: 'dev.default'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: KubernetesManifest@0
-            displayName: Create imagePullSecret
-            inputs:
-              action: createSecret
-              secretName: $(imagePullSecret)
-              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
-              
-          - task: KubernetesManifest@0
-            displayName: Deploy to Kubernetes cluster
-            inputs:
-              action: deploy
-              manifests: |
-                $(Pipeline.Workspace)/manifests/vote.yml
-              imagePullSecrets: |
-                $(imagePullSecret)
-              containers: |
-                $(containerRegistry)/$(imageRepository):$(tag)
+    # 7. Run a multi-line script (Note the use of the '|' character)
+    - script: |
+        echo "Starting build process..."
+        echo "Current Agent: $(Agent.Name)"
+        echo "Build ID: $(Build.BuildId)"
+        # Add your build commands here (e.g., npm install, dotnet build)
+      displayName: 'Run a multi-line script'
