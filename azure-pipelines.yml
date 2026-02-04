@@ -1,7 +1,9 @@
 ## This file is from github
 ## testing my pipeline at both places
 trigger:
-- aks
+  branches:
+    include:
+      - main
 
 variables:
   dockerRegistryServiceConnection: 'ACR'
