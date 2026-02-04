@@ -1,4 +1,5 @@
 ## This file is from github
+## testing my pipeline at both places
 trigger:
 - aks
 
