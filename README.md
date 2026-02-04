@@ -72,5 +72,5 @@ export ADO_PAT="<your_ado_token_here>"
 - Integration: Installed the [Azure Pipelines GitHub App](https://github.com/marketplace/azure-pipelines).
 - Result: Every commit pushed to GitHub now triggers action on azo pipeline.
 
-- Sample screen of successful mannequin reclaim
+- Sample screen of successful pipeline rewiring. 
   ![Alt Text](images/pipeline-rewiring.png)
