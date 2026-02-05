@@ -26,3 +26,4 @@ obj/
 # We do NOT ignore .github/workflows/*.yml 
 # But we might ignore local action testing files if you use 'act'
 .act/
+mannequins.csv

@@ -12,7 +12,7 @@ This repository represents the successful migration of the VotingApp from Azure 
 Permissions: Project Administrator or Build Administrator (to configure Service Connections and Pipelines)
 # Migration Overview
 - Source: Azure DevOps Services [VotingApp Project](https://dev.azure.com/Mahesh61076963/VotingApp)
-- Destination: GitHub Enterprise [voting-app-production]https://github.com/enterprises/mahesh-migration-sandbox/organizations
+- Destination: GitHub Enterprise [voting-app-production](https://github.com/enterprises/mahesh-migration-sandbox/organizations)
 - Strategy: Hybrid Migration (GitHub for Source, Azure DevOps & Actions for CI/CD)
 
 # Steps:
@@ -41,8 +41,11 @@ export ADO_PAT="<your_ado_token_here>"
     --github-repo "<GH_REPO>" \
     --wait
 
-* sample screen of success message 
+* Below is sample screen of successfully migrated message 
  ![Alt Text](images/Migration-success-msg.png)
+
+* Below is sample screen of commit history resemblence
+ ![Alt Text](images/commit-history-migrated-success.png)
 
 ## 3. Reclaiming Mannequin
 - A mannequin is a placeholder identity used by the GitHub Enterprise Importer. It preserves the history of who did what in Azure DevOps, but it isn't linked to a real GitHub account yet.
@@ -64,7 +67,7 @@ export ADO_PAT="<your_ado_token_here>"
 - Sample screen of successful mannequin reclaim
  ![Alt Text](images/mannequin-reclaim-success-msg.png)
 
-- For Security reason it has to be re-atrributes and approved. You finally see githu user details on commit history and other places.
+- For Security reasons it has to be re-atrributes and approved. You finally see githu user details on commit history and other places.
 ![Alt Text](images/Github-user-details.png)
 
 ## 4. ADO Pipeline rewiring
@@ -72,5 +75,46 @@ export ADO_PAT="<your_ado_token_here>"
 - Integration: Installed the [Azure Pipelines GitHub App](https://github.com/marketplace/azure-pipelines).
 - Result: Every commit pushed to GitHub now triggers action on azo pipeline.
 
-- Sample screen of successful pipeline rewiring. 
+- Below is sample screen of successful pipeline rewiring.
+    * commit message is same : github-repo(left screen) --> Azdo-repo(right-screen)
   ![Alt Text](images/pipeline-rewiring.png)
+
+## 5. Verification
+ - most crucial metadata migration are
+    * Git history - Commit SHAs remain identical (very important!).
+    * Authorship - Initially shows as "Mannequins" until reclaimed.
+    * Pull Requests & PR comments - PR numbers will likely change in the new repo
+
+# Technical Challenges
+- Identity Fragmentation: 
+    * ADO often uses Active Directory (UPN/Email), while GitHub uses Usernames. If your ADO email is mahesh.61076963@company.com but your GitHub is mahesh3602, the metadata looks "broken" until the Mannequin Reclaiming process is finished.
+
+- Large File Storage (LFS):
+    * If your ADO repo has large binary files (>100MB) not tracked via Git LFS, GitHub will reject the push. You must convert these to LFS before migrating.
+
+- Wiki Migration:
+    * ADO Wikis are actually separate hidden Git repos. The standard migration tool often skips these, requiring a separate manual "clone and push" of the .wiki repository.
+
+# Tools & Platform limitations
+ ### A. Non-Migratable Items
+ - Pipelines:
+    * Azure Pipelines do not convert to GitHub Actions automatically. You keep them in ADO (Rewiring) or rewrite them from scratch
+
+ - Permissions:
+    * ADO "Security Groups" do not map to GitHub "Teams." You must rebuild your RBAC (Role-Based Access Control) in GitHub.
+
+ - Work Item Links:
+    * Links between commits and ADO Boards (Work Items) will break unless you install the "Azure Boards" app in GitHub to re-establish the link.
+ 
+ ### B. API Rate Limits
+ - If you are migrating a massive organization (hundreds of repos), GitHub and ADO both have Rate Limits
+    * The Challenge: The migration might "pause" or fail halfway through if you trigger too many API calls.
+    * The Fix: Run migrations in batches and use a Personal Access Token (PAT) with high-level permissions to ensure maximum "quota."
+
+# Recommended Migration "Runbook"
+- To handle these challenges, your team should follow this order of operations:
+    * Cleanup: Delete "dead" branches in ADO that haven't been touched in 6+ months.
+    * Dry Run: Migrate a "test" repo first to see how the metadata looks.
+    * The "Freeze": Put the ADO repo in Read-Only mode so no one pushes code during the move.
+    * Execute: Run gh ado2gh migrate-repo.
+    * Reclaim: Map the Mannequins immediately to avoid "ghost" history.
