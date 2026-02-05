@@ -3,7 +3,8 @@
 This repository represents the successful migration of the VotingApp from Azure DevOps (ADO) to GitHub Enterprise (GHE). This document summarizes the technical steps taken to move the source code, preserve history, and maintain CI/CD continuity.
 
 # Prerequisites
-- Azure DevOps: * Access Level: Basic access or higher in the source organization.
+- Azure DevOps:
+    * Access Level: Basic access or higher in the source organization.
     * Permissions: Project Administrator or Build Administrator (to configure Service Connections and Pipelines)
 
 - GitHub Enterprise:
