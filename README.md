@@ -119,3 +119,23 @@ export ADO_PAT="<your_ado_token_here>"
     * The "Freeze": Put the ADO repo in Read-Only mode so no one pushes code during the move.
     * Execute: Run gh ado2gh migrate-repo.
     * Reclaim: Map the Mannequins immediately to avoid "ghost" history.
+
+# Additional Information
+  ## Bulk repo Migration
+  - Run this command to create a migration plan for an entire Azure DevOps Team Project:
+    * gh ado2gh generate-script \
+        --github-org "Your-GitHub-Org" \
+        --ado-org "Your-ADO-Org" \
+        --ado-team-project "Your-Project-Name" \
+        --output "migrate_all.ps1"
+    
+      * * --output: This creates a file named migrate_all.ps1
+
+  - Open the generated migrate_all.ps1 in a text editor (like VS Code). You will see a long list of commands that look like this:
+    * Exec { gh ado2gh migrate-repo --ado-org "Org" --ado-repo "Repo1" ... }
+        * * Filter: Delete any lines for repositories you want to archive or leave behind.
+        * * Rename: You can change the --github-repo names in the script if you want them to be different from the ADO names.
+
+    
+  - Run the Script
+    * ./migrate_all.ps1
