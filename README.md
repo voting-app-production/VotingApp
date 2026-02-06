@@ -139,3 +139,6 @@ export ADO_PAT="<your_ado_token_here>"
     
   - Run the Script
     * ./migrate_all.ps1
+
+  ## Migration using API
+  - Migrating repositories using the GitHub REST API (specifically the GraphQL-based migration service used by the GEI tool) is a powerful way to integrate migration into your own custom internal tools.
