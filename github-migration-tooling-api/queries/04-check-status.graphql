@@ -1,0 +1,10 @@
+query {
+  node(id: "RM_kgDaACQwMmY5ZGU1Ny02MzQzLTQzZjctYWFhNi04ZmVmZmMwMTEwYjE") {
+    ... on RepositoryMigration {
+      id
+      state
+      failureReason
+      createdAt
+    }
+  }
+}

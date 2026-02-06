@@ -1,0 +1,17 @@
+mutation {
+  startRepositoryMigration(input: {
+    sourceId: "MS_kgDaACQ4MzJiM2M4Yy01ZjUwLTQwMGMtYmY1OC04NDNjYmE4YmIyM2Q",
+    sourceRepositoryUrl: "https://dev.azure.com/Mahesh61076963/sampl4-for%20api/_git/sampl4-for%20api",
+    repositoryName: "sampl4-for-api",
+    ownerId: "O_kgDOD3SQGQ",
+    accessToken: "YOUR_ADO_PAT",
+    githubPat: "YOUR_GH_PAT",
+    continueOnError: true,
+    targetRepoVisibility: "public"
+  }) {
+    repositoryMigration {
+      id
+      state
+    }
+  }
+}

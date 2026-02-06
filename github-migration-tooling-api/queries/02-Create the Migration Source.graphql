@@ -1,0 +1,12 @@
+mutation {
+  createMigrationSource(input: {
+    name: "Azure DevOps Source",
+    url: "https://dev.azure.com",
+    ownerId: "O_kgDOD3SQGQ",
+    type: AZURE_DEVOPS
+  }) {
+    migrationSource {
+      id
+    }
+  }
+}

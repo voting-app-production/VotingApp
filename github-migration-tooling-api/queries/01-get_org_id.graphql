@@ -1,0 +1,5 @@
+query {
+  organization(login: "voting-app-production") {
+    id
+  }
+}
