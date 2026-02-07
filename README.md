@@ -71,6 +71,18 @@ export ADO_PAT="<your_ado_token_here>"
 - For Security reasons it has to be re-atrributes and approved. You finally see githu user details on commit history and other places.
 ![Alt Text](images/Github-user-details.png)
 
+##### The ado2gh tool checks for Mannequins (placeholders created during import). If you already "reclaimed" one entry, the tool thinks its job is done. However, Git Attribution (the profile picture on commits) is a separate layer. It relies on the Email inside the commit matching a Verified Email on a GitHub accoun
+- you should see correct author name and email in git log
+    * git log -1 --format="%an <%ae>" 
+- Correct the authorname and email for proper display. After this you should be seeing correct details.
+    * git filter-branch -f --env-filter '
+    export GIT_AUTHOR_NAME="<correct_name>"
+    export GIT_AUTHOR_EMAIL="<correct_email>"
+    export GIT_COMMITTER_NAME="<correct_name>"
+    export GIT_COMMITTER_EMAIL="<correct_email>"
+' --tag-name-filter cat -- --branches --tags
+
+
 ## 4. ADO Pipeline rewiring
 - To ensure zero downtime for the build process, we "rewired" our existing Azure Pipelines to listen to the new GitHub repository
 - Integration: Installed the [Azure Pipelines GitHub App](https://github.com/marketplace/azure-pipelines).
