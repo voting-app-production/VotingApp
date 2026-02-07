@@ -10,10 +10,10 @@ This repository contains the automation scripts and GraphQL queries required to 
   * GitHub PAT: Scopes: repo, admin:org, read:enterprise.
   * Azure DevOps PAT: Scopes: Code (Read & Write).
   * Environment Variables:
-        * export GH_PAT="your_github_token"
-        * export ADO_PAT="your_ado_token"
-        * export ORG_ID="O_kgDOD3SQGQ"
-        * export SOURCE_ID="MS_kgDaACQ4MzJiM2M4Yy01ZjUwLTQwMGMtYmY1OC04NDNjYmE4YmIyM2Q"
+    * export GH_PAT="your_github_token"
+    * export ADO_PAT="your_ado_token"
+    * export ORG_ID="O_kgDOD3SQGQ"
+    * export SOURCE_ID="MS_kgDaACQ4ODlmZjU0MC02ZTZlLTRlZTMtYjYyNy0yYjY3YzU0M2RjMjE"
 
 ## Step-by-Step Execution Guide
   * Step 1: Prepare the New Repository Metadata
