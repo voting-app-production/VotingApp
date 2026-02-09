@@ -27,3 +27,4 @@ obj/
 # But we might ignore local action testing files if you use 'act'
 .act/
 mannequins.csv
+*.env
