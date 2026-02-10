@@ -154,3 +154,14 @@ export ADO_PAT="<your_ado_token_here>"
 
   ## Migration using API
   - Migrating repositories using the GitHub REST API (specifically the GraphQL-based migration service used by the GEI tool) is a powerful way to integrate migration into your own custom internal tools.
+
+  #### Follow below automation scripts to execute
+  - update 'migrate_repo.env' file with ADO_PAT,GH_PAT,ADO_REPO_URL,GIT_REPO_NAME,GITHUB_ORG_NAME
+  - Run script github-migration-tooling-api/scripts/01-get_org_id.sh, you get orgId. Update ORG_ID from result in env file.
+  - Run script github-migration-tooling-api/scripts/02-create_migration_source_id.sh, you get sourceId. Update SOURCE_ID from result in env file.
+  - Run script github-migration-tooling-api/scripts/03-start_migrate_repo.sh, you get migrationID.Update MIGRATION_ID from result in env file.
+  - Run script github-migration-tooling-api/scripts/04-check_status.sh. You see Success/Failure message of Migration.
+  - Run python script github-migration-tooling-api/scripts/05-generate_mannequins.py. This Generates csv file in root folder.
+  - Update csv file with target users(From Github).
+  - Finnaly, Run reclaim github-migration-tooling-api/scripts/06-reclaim_mannequins.py. It picks the updated csv file from root folder.
+  
