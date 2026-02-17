@@ -164,4 +164,5 @@ export ADO_PAT="<your_ado_token_here>"
   - Run python script github-migration-tooling-api/scripts/05-generate_mannequins.py. This Generates csv file in root folder.
   - Update csv file with target users(From Github).
   - Finnaly, Run reclaim github-migration-tooling-api/scripts/06-reclaim_mannequins.py. It picks the updated csv file from root folder.
-  
+
+ ## test azure board
